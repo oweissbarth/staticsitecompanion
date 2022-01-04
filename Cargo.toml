@@ -1,0 +1,16 @@
+[package]
+name = "staticsitecompanion"
+version = "0.1.0"
+authors = ["oweissbarth <mail@oweissbarth.de>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+actix-web = "4.0.0-beta.18"
+sqlx = { version = "0.5.10", features = ["runtime-actix-rustls", "mysql", "chrono", "macros", "uuid"]}
+serde = "1.0.132"
+serde_json = "1.0.73"
+uuid = { version = "0.8.1", features = ["serde", "v4"] }
+chrono = { version = "0.4.19", features = ["serde"] }
+env_logger = "0.9.0"
