@@ -10,6 +10,7 @@ pub struct Download {
     pub id: Uuid,
     pub name: String,
     pub user: Uuid,
+    pub download_count_offset: i64
 }
 
 impl FromRow<'_, MySqlRow> for Download {
@@ -18,6 +19,7 @@ impl FromRow<'_, MySqlRow> for Download {
             id:  Uuid::parse_str(row.get("id")).unwrap(),
             name: row.get("name"),
             user:  Uuid::parse_str(row.get("user")).unwrap(),
+            download_count_offset: row.get("download_count_offset")
         })
     }
 }

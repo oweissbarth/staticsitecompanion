@@ -29,9 +29,11 @@ impl<'c> Table<'c, DownloadLogEntry> {
     pub async fn get_download_count(&self, download_id: Uuid) -> Result<i64, sqlx::Error> {
         sqlx::query_scalar(
             r#"
-            SELECT COUNT(*) as count FROM download_log
+            SELECT COUNT(*)+download.download_count_offset as count FROM download_log
             JOIN download_version 
-            ON download_log.download_version_id=download_version.id 
+            ON download_log.download_version_id=download_version.id
+            JOIN download
+            ON download.id=download_version.download_id
             WHERE download_version.download_id=?"#,
         )
         .bind(&download_id.to_hyphenated())
