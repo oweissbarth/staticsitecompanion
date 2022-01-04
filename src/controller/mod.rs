@@ -3,7 +3,7 @@ use super::AppState;
 use std::sync::Mutex;
 
 pub mod downloadable_controller;
-use super::model::{Download, DownloadVersion, DownloadLogEntry, User};
+use super::model::{DownloadLogEntry};
 
 pub use downloadable_controller::init as init_downloadable_controller;
 

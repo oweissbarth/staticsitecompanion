@@ -85,7 +85,6 @@ struct DownloadStats{
 
 #[get("/download/{id}/count")]
 async fn get_download_count(
-    req: HttpRequest,
     downloadable_id: web::Path<String>,
     app_state: web::Data<AppState<'_>>,
 ) -> impl Responder {

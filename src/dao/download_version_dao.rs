@@ -1,9 +1,6 @@
 use super::Table;
 use super::DownloadVersion;
 
-use sqlx::mysql::{MySqlQueryResult};
-use sqlx::types::Uuid;
-
 
 impl<'c> Table<'c, DownloadVersion> {
 pub async fn get_download_by_id(&self, downloadable_id: &str, version: &Option<String>) -> Result<DownloadVersion, sqlx::Error> {
