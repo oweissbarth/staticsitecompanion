@@ -1,10 +1,12 @@
-use super::model::{Download, DownloadVersion, DownloadLogEntry, User};
+use super::model::{Download, DownloadVersion, DownloadLogEntry, User, Form, FormSubmission};
 
 pub mod db_context;
 mod downloadable_dao;
-//mod user_dao;
 mod download_log_dao;
 mod download_version_dao;
+mod form_dao;
+mod form_submission_dao;
+mod user_dao;
 
 pub type Database<'c> = db_context::Database<'c>;
 pub type Table<'c, T> = db_context::Table<'c, T>;

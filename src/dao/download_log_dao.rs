@@ -8,16 +8,16 @@ use sqlx::types::Uuid;
 impl<'c> Table<'c, DownloadLogEntry> {
 
     pub async fn add_download_log_entry(&self, download_log_entry: &DownloadLogEntry) -> Result<MySqlQueryResult, sqlx::Error> {
-        sqlx::query(
+        sqlx::query!(
             r#"
             INSERT INTO download_log (`id`, `download_version_id`, `datetime`, `user_agent`, `referrer`)
             VALUES(?, ?, ?, ?, ?)"#,
+            &download_log_entry.id.to_hyphenated(),
+            &download_log_entry.download_version_id.to_hyphenated(),
+            &download_log_entry.datetime,
+            &download_log_entry.user_agent,
+            &download_log_entry.referrer
         )
-        .bind(&download_log_entry.id.to_hyphenated())
-        .bind(&download_log_entry.download_version_id.to_hyphenated())
-        .bind(&download_log_entry.datetime)
-        .bind(&download_log_entry.user_agent)
-        .bind(&download_log_entry.referrer)
         .execute(&*self.pool)
         .await
         .map_err(|e| {
@@ -26,8 +26,8 @@ impl<'c> Table<'c, DownloadLogEntry> {
         })
     }
 
-    pub async fn get_download_count(&self, download_id: Uuid) -> Result<i64, sqlx::Error> {
-        sqlx::query_scalar(
+    pub async fn get_download_count(&self, download_id: Uuid) -> Result<Option<i64>, sqlx::Error> {
+        sqlx::query_scalar!(
             r#"
             SELECT COUNT(*)+download.download_count_offset as count FROM download_log
             JOIN download_version 
@@ -35,12 +35,10 @@ impl<'c> Table<'c, DownloadLogEntry> {
             JOIN download
             ON download.id=download_version.download_id
             WHERE download_version.download_id=?"#,
+            &download_id.to_hyphenated()
         )
-        .bind(&download_id.to_hyphenated())
         .fetch_one(&*self.pool)
         .await
     }
 
-
-    
 }

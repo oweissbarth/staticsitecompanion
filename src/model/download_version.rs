@@ -1,9 +1,7 @@
 use serde::{Deserialize, Serialize};
 use sqlx::mysql::MySqlRow;
 use sqlx::{FromRow, Row};
-//use sqlx::types::Uuid;
-use uuid::Uuid;
-
+use sqlx::types::Uuid;
 
 #[derive(Serialize, Deserialize, Clone)]
 pub struct DownloadVersion {

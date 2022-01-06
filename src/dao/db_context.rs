@@ -1,4 +1,4 @@
-use super::{DownloadVersion, Download, DownloadLogEntry, User};
+use super::{DownloadVersion, Download, DownloadLogEntry, User, Form, FormSubmission};
 use sqlx::mysql::{MySqlRow, MySqlPoolOptions};
 use sqlx::{FromRow, MySqlPool};
 use std::sync::Arc;
@@ -28,7 +28,9 @@ pub struct Database<'r> {
     pub users: Arc<Table<'r, User>>,
     pub downloads: Arc<Table<'r, Download>>,
     pub download_versions: Arc<Table<'r, DownloadVersion>>,
-    pub download_logs: Arc<Table<'r, DownloadLogEntry>>
+    pub download_logs: Arc<Table<'r, DownloadLogEntry>>,
+    pub forms: Arc<Table<'r, Form>>,
+    pub form_submissions: Arc<Table<'r, FormSubmission>>
 }
 
 impl Database<'_> {
@@ -44,7 +46,9 @@ impl Database<'_> {
             users: Arc::from(Table::new(pool.clone())),
             downloads: Arc::from(Table::new(pool.clone())),
             download_versions: Arc::from(Table::new(pool.clone())),
-            download_logs: Arc::from(Table::new(pool.clone()))
+            download_logs: Arc::from(Table::new(pool.clone())),
+            forms: Arc::from(Table::new(pool.clone())),
+            form_submissions: Arc::from(Table::new(pool.clone()))
         }
     }
 }

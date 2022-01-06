@@ -17,6 +17,7 @@ async fn main() -> std::io::Result<()> {
         let app_state = web::Data::new(AppState {
                 connections: Mutex::new(0),
                 context: Arc::new(db_context),
+                config: Arc::new(config.clone())
             });
         
         env_logger::init_from_env(env_logger::Env::new().default_filter_or("info"));
@@ -26,6 +27,7 @@ async fn main() -> std::io::Result<()> {
                 .wrap(Logger::default())
                 .app_data(app_state.clone())
                 .configure(controller::init_downloadable_controller)
+                .configure(controller::init_form_controller)
         })
         .bind(config.get_app_url())?;
         println!("Listening on: {0}", config.get_app_url());
