@@ -1,0 +1,21 @@
+{
+  "app": {
+    "url": "0.0.0.0",
+    "port": 8000
+  },
+  "dao":
+  {
+    "user": "DBUSERNAME",
+    "password": "DBPASSWORD",
+    "address": "DBHOST",
+    "database": "DBNAME"
+  },
+  "sendgrid":
+  {
+    "api_key": "SECRET_SENDGRID_API_KEY",
+    "api_url": "https://api.sendgrid.com/v3/mail/send",
+    "template_id": "ID_OF_THE_SENDGRID_TEMPLATE",
+    "from_email": "staticsitecompanion@tastytorus.de",
+    "from_name": "StaticSiteCompanion"
+  }
+}
