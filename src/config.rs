@@ -66,4 +66,8 @@ impl Config {
     pub fn get_from_name(&self) -> String {
         self.sendgrid.from_name.clone()
     }
+
+    pub fn heartbeat(&self) -> bool{
+        return true;
+    }
 }

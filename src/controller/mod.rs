@@ -5,10 +5,12 @@ use actix_web::{HttpRequest, http::header};
 
 pub mod downloadable_controller;
 pub mod form_controller;
+pub mod heartbeat_controller;
 use super::model::{FormSubmission, DownloadLogEntry};
 
 pub use downloadable_controller::init as init_downloadable_controller;
 pub use form_controller::init as init_form_controller;
+pub use heartbeat_controller::init as init_heartbeat_controller;
 
 
 pub fn get_referrer(req: &HttpRequest) -> Option<String>{

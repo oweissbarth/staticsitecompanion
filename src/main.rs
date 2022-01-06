@@ -28,6 +28,7 @@ async fn main() -> std::io::Result<()> {
                 .app_data(app_state.clone())
                 .configure(controller::init_downloadable_controller)
                 .configure(controller::init_form_controller)
+                .configure(controller::init_heartbeat_controller)
         })
         .bind(config.get_app_url())?;
         println!("Listening on: {0}", config.get_app_url());
