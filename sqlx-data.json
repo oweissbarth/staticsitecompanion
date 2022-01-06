@@ -1,0 +1,48 @@
+{
+  "db": "MySQL",
+  "610c9c7e7cf10151f4b330e2bebf2da6d09fd5495e47b095ed62792af212dde8": {
+    "query": "\n            SELECT COUNT(*)+download.download_count_offset as count FROM download_log\n            JOIN download_version \n            ON download_log.download_version_id=download_version.id\n            JOIN download\n            ON download.id=download_version.download_id\n            WHERE download_version.download_id=?",
+    "describe": {
+      "columns": [
+        {
+          "ordinal": 0,
+          "name": "count",
+          "type_info": {
+            "type": "LongLong",
+            "flags": {
+              "bits": 128
+            },
+            "char_set": 63,
+            "max_size": 22
+          }
+        }
+      ],
+      "parameters": {
+        "Right": 1
+      },
+      "nullable": [
+        true
+      ]
+    }
+  },
+  "67825e4cd5835299344012b5f4da1c0b979d4273c6373631efe1dae2d1c53b23": {
+    "query": "\n            INSERT INTO form_submission (`id`, `form_id`, `content`, `user_agent`, `datetime`)\n            VALUES(?, ?, ?, ?, ?)",
+    "describe": {
+      "columns": [],
+      "parameters": {
+        "Right": 5
+      },
+      "nullable": []
+    }
+  },
+  "def655f342cad7fc3bbd7137d95c081e610a688d5064a4b603a5acc28c5996d1": {
+    "query": "\n            INSERT INTO download_log (`id`, `download_version_id`, `datetime`, `user_agent`, `referrer`)\n            VALUES(?, ?, ?, ?, ?)",
+    "describe": {
+      "columns": [],
+      "parameters": {
+        "Right": 5
+      },
+      "nullable": []
+    }
+  }
+}
