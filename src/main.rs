@@ -1,5 +1,6 @@
 use actix_web::{ web, App,  HttpServer};
 use actix_web::middleware::Logger;
+use actix_cors::{Cors};
 use staticsitecompanion::config::Config;
 use staticsitecompanion::dao::Database;
 use staticsitecompanion::{controller, AppState};
@@ -25,6 +26,7 @@ async fn main() -> std::io::Result<()> {
         let app = HttpServer::new(move || {
         App::new()
                 .wrap(Logger::default())
+                .wrap(Cors::default().allow_any_origin().allowed_methods(["GET", "POST", "OPTIONS", "HEAD"]).allow_any_header())
                 .app_data(app_state.clone())
                 .configure(controller::init_downloadable_controller)
                 .configure(controller::init_form_controller)
