@@ -1,21 +1,31 @@
-FROM rust:latest as build
+FROM lukemathwalker/cargo-chef:latest-rust-1.57.0 AS chef
+WORKDIR /app
 
-WORKDIR /usr/src/staticsitecompanion
+FROM chef AS planner
+COPY . .
+RUN cargo chef prepare --recipe-path recipe.json
+
+FROM chef as builder
+
+COPY  --from=planner /app/recipe.json recipe.json
+
+RUN cargo chef cook --release --recipe-path recipe.json
+
 COPY . .
 
-RUN cargo install --path .
+RUN cargo build --release --bin staticsitecompanion
 
 FROM debian:bullseye-slim AS runtime
 
 # Install SSL
 RUN apt-get update -y \
-    && apt-get install -y --no-install-recommends openssl \
+    && apt-get install -y --no-install-recommends openssl ca-certificates \
     # Clean up
     && apt-get autoremove -y \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /usr/src/staticsitecompanion
-COPY --from=build /usr/src/staticsitecompanion/target/release/staticsitecompanion staticsitecompanion
-
-CMD ["staticsitecompanion"]
+WORKDIR /app
+COPY --from=builder /app/target/release/staticsitecompanion staticsitecompanion
+COPY config.json .
+CMD ["./staticsitecompanion"]
