@@ -58,11 +58,14 @@ async fn submit_form(
                 .send();
             
             let results = join!(insert_f, mail_f);
-            
+
 
             match results{
-                (Ok(_), Ok(_)) =>HttpResponse::Found().append_header(("Location", form.redirect_success.unwrap())).finish(),
-                _ => HttpResponse::InternalServerError().finish()
+                (Ok(_), Ok(_)) =>HttpResponse::SeeOther().append_header(("Location", form.redirect_success.unwrap())).finish(),
+                _ => {
+                    let e = if results.1.is_err(){format!("{}", results.1.err().unwrap())}else{format!("{}", results.0.err().unwrap())};
+                    HttpResponse::SeeOther().append_header(("Location", form.redirect_failure.unwrap())).json(e)
+                }
             }
         }
     }
