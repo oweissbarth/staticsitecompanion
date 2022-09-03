@@ -43,9 +43,7 @@ async fn submit_form(
             let payload = json!(
                 {
                 "template_id": app_state.config.get_template_id(),
-                "subject": "This will be replaced by the template",
                 "from": {"email": app_state.config.get_from_email(), "name": app_state.config.get_from_name()},
-                "content": [{"type": "text/plain", "value": "This will be replaced by the template"}],
                 "personalizations": [{"to": [{"email":form.notify_email, "name": "me"}], "dynamic_template_data": {"form_fields": content.clone()}}],
             });
 
