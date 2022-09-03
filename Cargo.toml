@@ -1,6 +1,6 @@
 [package]
 name = "staticsitecompanion"
-version = "0.1.0"
+version = "0.2.0"
 authors = ["oweissbarth <mail@oweissbarth.de>"]
 edition = "2021"
 
