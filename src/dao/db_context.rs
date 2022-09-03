@@ -39,8 +39,10 @@ impl Database<'_> {
         let pool_options = MySqlPoolOptions::new()
             .max_connections(8) // TODO: pass in the pool connection count
             .connect(sql_url)
-            .await
-            .unwrap();
+            .await.expect("Failed to connect to database");
+
+        sqlx::migrate!().run(&pool_options).await.expect("Failed to perform migrations");
+
         let pool = Arc::new(pool_options);
 
         Database {
