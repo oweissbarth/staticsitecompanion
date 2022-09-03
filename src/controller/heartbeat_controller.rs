@@ -3,6 +3,8 @@ use serde_json::json;
 
 use super::AppState;
 
+const VERSION: &str = env!("CARGO_PKG_VERSION");
+
 pub fn init(cfg: &mut web::ServiceConfig) {
     cfg.service(get_heartbeat);
 }
@@ -16,7 +18,8 @@ async fn get_heartbeat(
     let payload = json!({
         "db": app_state.context.heartbeat().await,
         "config": app_state.config.heartbeat(),
-        "web": true
+        "web": true,
+        "version": VERSION
     });
 
     if true {
