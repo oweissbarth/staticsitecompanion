@@ -10,8 +10,8 @@ impl<'c> Table<'c, FormSubmission> {
             r#"
             INSERT INTO form_submission (`id`, `form_id`, `content`, `user_agent`, `datetime`)
             VALUES(?, ?, ?, ?, ?)"#,
-            &form_submission.id.to_hyphenated(),
-            &form_submission.form_id.to_hyphenated(),
+            &form_submission.id.hyphenated(),
+            &form_submission.form_id.hyphenated(),
             &form_submission.content,
             &form_submission.user_agent,
             &form_submission.datetime

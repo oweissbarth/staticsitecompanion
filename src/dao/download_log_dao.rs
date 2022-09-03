@@ -12,8 +12,8 @@ impl<'c> Table<'c, DownloadLogEntry> {
             r#"
             INSERT INTO download_log (`id`, `download_version_id`, `datetime`, `user_agent`, `referrer`)
             VALUES(?, ?, ?, ?, ?)"#,
-            &download_log_entry.id.to_hyphenated(),
-            &download_log_entry.download_version_id.to_hyphenated(),
+            &download_log_entry.id.hyphenated(),
+            &download_log_entry.download_version_id.hyphenated(),
             &download_log_entry.datetime,
             &download_log_entry.user_agent,
             &download_log_entry.referrer
@@ -35,7 +35,7 @@ impl<'c> Table<'c, DownloadLogEntry> {
             JOIN download
             ON download.id=download_version.download_id
             WHERE download_version.download_id=?"#,
-            &download_id.to_hyphenated()
+            &download_id.hyphenated()
         )
         .fetch_one(&*self.pool)
         .await
