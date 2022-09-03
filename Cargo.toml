@@ -9,6 +9,7 @@ edition = "2021"
 [dependencies]
 actix-web = "4"
 actix-cors = "0.6.2"
+actix-governor = "0.3.2"
 sqlx = { version = "0.6.1", features = ["runtime-actix-rustls", "mysql", "chrono", "macros", "uuid", "json", "offline"]}
 serde = "1.0.144"
 serde_json = "1.0.85"

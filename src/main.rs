@@ -1,6 +1,7 @@
 use actix_web::{ web, App,  HttpServer};
 use actix_web::middleware::Logger;
 use actix_cors::{Cors};
+use actix_governor::{Governor, GovernorConfigBuilder};
 use staticsitecompanion::config::Config;
 use staticsitecompanion::dao::Database;
 use staticsitecompanion::{controller, AppState};
@@ -20,11 +21,21 @@ async fn main() -> std::io::Result<()> {
                 context: Arc::new(db_context),
                 config: Arc::new(config.clone())
             });
+
+
         
         env_logger::init_from_env(env_logger::Env::new().default_filter_or("info"));
 
+        let governor_conf = GovernorConfigBuilder::default()
+                .per_second(10)
+                .burst_size(5)
+                .use_headers()
+                .finish()
+                .unwrap();
+
         let app = HttpServer::new(move || {
-        App::new()
+                App::new()
+                .wrap(Governor::new(&governor_conf))
                 .wrap(Logger::default())
                 .wrap(Cors::default().allow_any_origin().allowed_methods(["GET", "POST", "OPTIONS", "HEAD"]).allow_any_header())
                 .app_data(app_state.clone())
